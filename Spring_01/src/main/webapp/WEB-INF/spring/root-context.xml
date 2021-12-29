@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<!--  root-context : Request와 무관한 항목들을 명세  -->
+	<!-- Singleton Pattern -->
+	<!-- bean에 scope로 prototype을 줄 수도 있다. -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" >
+		<property name="username" value="kh"/>
+		<property name="password" value="kh"/>
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name="initialSize" value="30"/>
+	</bean>
+	
+	<bean id = "jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<!-- 기본 타입은 value ref url을 넣을 때, -->
+		<!-- Dependency Injection => 어노테이션 방식도 있지만 xml방식으로도 있다.-->
+		<property name="dataSource" ref="dataSource"></property>
+		
+	</bean>
+	
+	
+</beans>
