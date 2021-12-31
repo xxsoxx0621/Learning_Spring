@@ -13,8 +13,8 @@
 	<c:choose>
 		<c:when test="${loginID != null }">
 			${loginID }님 환영합니다.<br>
-			<a href="/"><input type="button" value="게시판"></a>
-			<input type="button" id="myPage" value="마이페이지"></a>
+			<input type="button" value="게시판" id="toboard">
+			<input type="button" id="myPage" value="마이페이지">
 			<a href="/member/logout"><input type="button" value="로그아웃"></a>
 			<input type="button" id="deleteMem" value="회원탈퇴">
 			<script>
@@ -28,6 +28,10 @@
 			
 			$("#myPage").on("click",function(){
 				location.href="/member/myPage";
+			})
+			
+			$("#toboard").on("click",function(){
+				location.href="/board/list";
 			})
 			
 			</script>

@@ -34,7 +34,7 @@ public class MemberController {
 		}
 
 		@ResponseBody
-		@RequestMapping("idDuplCheck")
+		@RequestMapping(value="idDuplCheck", produces="text/html;charset=utf8")
 		public String idDuplCheck(String id) throws Exception  {
 			// 중복검사를 하고, 
 			// 결과를 Eclipse 콘솔에 출력하는 것까지 만드세요.
