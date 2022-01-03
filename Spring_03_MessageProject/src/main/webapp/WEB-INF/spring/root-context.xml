@@ -14,10 +14,22 @@
 		<property name="initialSize" value="30" />
 	</bean>
 	
-	<bean id = "jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-		<!-- 기본 타입은 value ref url을 넣을 때, -->
-		<!-- Dependency Injection => 어노테이션 방식도 있지만 xml방식으로도 있다.-->
+	<!-- <bean id = "jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		기본 타입은 value ref url을 넣을 때,
+		Dependency Injection => 어노테이션 방식도 있지만 xml방식으로도 있다.
 		<property name="dataSource" ref="dataSource"></property>
 		
 	</bean>
+	 -->
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+			<property name="mapperLocations" value="classpath:/mybatis/*-mapper.xml"></property>
+	
+	</bean>
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"></constructor-arg>
+	</bean>
+	
+	
 </beans>

@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,41 +23,33 @@ import kh.spring.dto.MessageDTO;
 @Component
 public class MessageDAO {
 	
-	@Autowired
-	private JdbcTemplate jdbc;
+	//Mybatis 방식
 	
-	public int insert(MessageDTO dto) throws Exception{
-		String sql = "insert into Messages values(Messages_seq.nextval,?,?,sysdate)";
-		return jdbc.update(sql,dto.getWriter(),dto.getMessage());
+		@Autowired
+		private SqlSessionTemplate mybatis;
 		
-	}
+	
+		public int insert(MessageDTO dto) {
+			return mybatis.insert("Messages.insert",dto);
+			
+		}
 	
 	public int delete(int seq) throws Exception {
-		String sql = "delete from Messages where seq = ?";
-		return jdbc.update(sql,seq);
+		return mybatis.delete("Messages.delete",seq);
 	}
 	
-	public int update(MessageDTO dto)throws Exception{
-		String sql = "update  Messages set writer = ?, message =? where seq = ?";
-		return jdbc.update(sql,dto.getWriter(),dto.getMessage(),dto.getSeq());
+	public int update(int seq, String writer, String message)throws Exception{
+		Map<String,String> map = new HashMap<>();
+		map.put("seq", String.valueOf(seq));
+		map.put("writer", writer);
+		map.put("message", message);
+		
+		return mybatis.update("Messages.update",map);
 	}
 	public List<MessageDTO> selectAll() throws Exception{
-		String sql = "select * from Messages order by seq";
-		return jdbc.query(sql, new RowMapper<MessageDTO>() {
+		
+		return mybatis.selectList("Messages.selectAll");
 
-			@Override
-			public MessageDTO mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-				MessageDTO dto = new MessageDTO();
-				dto.setSeq(rs.getInt("seq"));
-				dto.setWriter(rs.getString("writer"));
-				dto.setMessage(rs.getString("message"));
-				dto.setWrite_date(rs.getDate("write_date"));
-				return dto;
-				
-			}
-			
-		});
 	}
 //	public int insert(MessageDTO dto) throws Exception{
 //		

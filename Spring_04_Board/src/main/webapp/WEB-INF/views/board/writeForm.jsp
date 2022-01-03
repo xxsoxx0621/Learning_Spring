@@ -24,15 +24,16 @@
 </style>
 </head>
 <body>
-	<form action="/board/saveWrite" method="post" id="saveForm">
+	<form action="/board/saveWrite" method="post" id="saveForm" enctype="multipart/form-data">
 		<div class="container">
-
+			<input type="text" value=${loginID}" name="writer" hidden>
 			<div id="subject">
 				<input type="text" placeholder="제목을 입력하세요." name="title" id="title">
+				<input type="file" name="file">
 			</div>
 			<textarea id="summernote" name="contents"></textarea>
 			<div class="btns">
-				<button class="btn btn-primary" onclick="history:back()" type="button">목록으로</button>
+				<button class="btn btn-primary" onclick="history.back()" type="button">목록으로</button>
 				<button id="save" class="btn btn-primary" type="submit">저장하기</button>
 			</div>
 		</div>

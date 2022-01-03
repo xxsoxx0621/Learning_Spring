@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,8 +57,8 @@ public class HomeController {
 	}
 	
 	@RequestMapping("updateProc")
-	public String deleteProc(MessageDTO dto) throws Exception{
-		int result = dao.update(dto);
+	public String deleteProc(int seq, String writer, String message) throws Exception{
+		int result = dao.update(seq,writer,message);
 		return "redirect:outputView";
 	}
 	

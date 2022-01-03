@@ -122,21 +122,37 @@ public class HomeController {
 		@RequestMapping("deleteProc")
 		public String deleteProc(int delTarget)throws Exception {
 			
-			int result = dao.delete(delTarget);
+			int result = dao.deleteBySeq(delTarget);
 	
 			return "redirect:toOutput";
 		}
 		@RequestMapping("updateProc")
-		public String updateProc(ContactDTO dto) throws Exception{
-			int result = dao.update(dto);
+		public String updateProc(String column, String value, int seq) throws Exception{
+			int result = dao.update(column, value, seq);
 			return "redirect:toOutput";
 		}
 		
 		@RequestMapping("search")
-		public String search(int searchSeq,Model model) throws Exception{
+		public String search(int searchSeq, Model model) throws Exception{
 			List<ContactDTO> list = dao.search(searchSeq);
 			model.addAttribute("list",list);
 			return "output";
+		}
+		
+		@RequestMapping("toSearch")
+		public String toSearch() {
+			return "search";
+		}
+		
+		@RequestMapping("searchByMultiCon")
+		public String toSearch(ContactDTO dto) {
+			
+			List<ContactDTO> list = dao.searchByMultiCon(dto);
+			
+			for(ContactDTO dtos : list) {
+				System.out.println(dtos.getSeq() + " : " + dtos.getName() + " : " + dtos.getContact());
+			}
+			return "home";
 		}
 		// 예외의 종류를 나눌 수 있음.
 		@ExceptionHandler(Exception.class)

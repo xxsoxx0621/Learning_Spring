@@ -9,10 +9,14 @@ public class BoardDTO {
 	private String contents;
 	private Timestamp write_date;
 	private int view_count;
+
+	
 	
 	public BoardDTO() {
 	
 	}
+
+	
 
 	public BoardDTO(int seq, String writer, String title, String contents, Timestamp write_date, int view_count) {
 		super();
@@ -22,7 +26,13 @@ public class BoardDTO {
 		this.contents = contents;
 		this.write_date = write_date;
 		this.view_count = view_count;
+		
 	}
+
+
+
+
+
 
 	public int getSeq() {
 		return seq;

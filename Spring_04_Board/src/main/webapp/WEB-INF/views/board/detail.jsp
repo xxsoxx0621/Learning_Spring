@@ -34,6 +34,16 @@
 				<input type="text" name="seq" value="${i.seq }" hidden>
 				<input type="text" placeholder="제목을 입력하세요." id="title" name="title" value="${i.title }" readonly>
 			</div>
+			
+				<div id="fileBox">
+				<%-- <c:if test="${!empty files }"> --%>
+				첨부파일 : 
+				 <c:forEach var="f" items="${fileList }">
+					<a href="/file/download?oriName=${f.oriName}&sysName=${f.sysName}">${f.oriName }</a>
+				</c:forEach>
+					<%-- </c:if> --%>
+				</div>
+		
 			<textarea id="summernote" name="contents" >${i.contents }</textarea>
 			<c:choose>
 			<c:when test="${loginID == i.writer }">

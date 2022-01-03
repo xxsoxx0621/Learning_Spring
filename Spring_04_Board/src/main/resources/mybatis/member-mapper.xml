@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Member">
+  
+  <select id="idDuplCheck" resultType="int">
+  	select count(*) from member where id = #{id}
+  </select>
+  
+  <insert id="insert">
+ 	 insert into member values(#{id},#{pw},#{name},#{phone},#{email},#{zipcode},#{address1},#{address2},sysdate)
+  </insert>
+  <select id="login" resultType="int">
+  	select count(*) from member where id=#{id} and pw=#{pw}
+  </select>
+  
+  <delete id="delete">
+  	delete from member where id = #{id}
+  </delete>
+  
+  <select id="selectAll" resultType="kh.spring.dto.BoardDTO">
+	  select * from member where id = #{id}
+  </select>
+  
+  <update id="updateMem">
+  	update  member set name = #{name} ,phone =#{phone}, email = #{email}, address1 = #{address1}, address2 =#{address2} where id = #{id}
+  </update>
+  </mapper>

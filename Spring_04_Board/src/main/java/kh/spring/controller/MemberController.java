@@ -94,8 +94,7 @@ public class MemberController {
 		}
 		@RequestMapping("updateMem")
 		public String updateMem(MemberDTO dto) throws Exception{
-			String id = (String) session.getAttribute("loginID");
-			int result = dao.updateMem(dto,id);
+			int result = dao.updateMem(dto);
 			if(result > 0) {
 				System.out.println("정보수정이 완료 되었습니다");	
 			}
