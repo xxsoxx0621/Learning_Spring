@@ -11,7 +11,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import kh.spring.service.FileService;
 
 @Controller
 @RequestMapping("/file/")
@@ -21,24 +24,15 @@ public class FileController {
 	@Autowired
 	private HttpSession session;
 	
+	@Autowired
+	private FileService fileService;
+	
 	@RequestMapping("download")
 	public void download(HttpServletResponse response, String oriName, String sysName) throws Exception {
 		
 		String realPath = session.getServletContext().getRealPath("upload"); 	// 파일 위치 경로를 획득 	
-		File target = new File(realPath+"/"+sysName);							// sysName과 결합하여 대상 파일 객체 생성 
 		
-		try(DataInputStream dis = new DataInputStream(new FileInputStream(target)); // 대상 파일에 대한 InputStream 개방	
-				DataOutputStream dos = new DataOutputStream(response.getOutputStream());){
-			
-			byte[] fileContents = new byte[(int)target.length()]; 					//  대상 파일을 적재할 메모리 공간 확보 
-			dis.readFully(fileContents); 											// 대상 파일 로딩 
-			
-			response.reset();
-			response.setHeader("Content-Disposition", "attachment;filename="+oriName);
-			
-			dos.write(fileContents);
-			dos.flush();
-		}
+		fileService.download(response, oriName, sysName, realPath);
 		
 	}
 

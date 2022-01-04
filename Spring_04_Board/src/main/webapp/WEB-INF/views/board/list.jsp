@@ -26,7 +26,7 @@
          	<tr>
          		<td>${i.seq }
          		<td><a href="/board/detail?seq=${i.seq }">${i.title }</a>
-         		<td>${i.writer }
+         		<td>${i.writer}
          		<td>${i.write_date }
          		<td>${i.view_count }
          	</tr>

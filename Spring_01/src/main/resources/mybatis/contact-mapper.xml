@@ -25,7 +25,7 @@
   	</delete>
   	
   	<!--  #은 Single Quotation을 자동으로 붙여준다. Single Quotation이 필요없다면 $를 쓰면 된다. -->
-  	<update id="update">
+  	<update id="updateProc">
   		update contact set ${column} = #{value} where seq = #{seq}
   	</update>
   	

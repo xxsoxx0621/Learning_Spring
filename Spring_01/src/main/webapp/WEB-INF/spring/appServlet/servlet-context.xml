@@ -26,6 +26,21 @@
 	
 	<context:component-scan base-package="kh.spring" />
 	
+	<interceptors>
+		<interceptor>
+			<!-- 모든 uri을 허가  -->
+			<mapping path="/**"/> 
+			<!--  제외할 경로 : home 으로 가는 것은 제외 시켜준다. -->
+			<exclude-mapping path="/"/> 
+			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/toInput"/>
+			 <!-- images와 css 모든 것들은 제외시켜라  -->
+			<exclude-mapping path="/images/**"/>
+			<exclude-mapping path="/css/**"/>
+			<beans:bean class="kh.spring.interceptor.TestInterecptor"/>
+		</interceptor>
+	</interceptors>
+	
 	
 	
 </beans:beans>

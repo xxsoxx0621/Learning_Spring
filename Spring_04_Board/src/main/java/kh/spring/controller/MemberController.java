@@ -10,8 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kh.spring.dao.MemberDAO;
 import kh.spring.dto.MemberDTO;
+import kh.spring.service.MemberService;
 import kh.spring.utils.EncryptionUtils;
 
 
@@ -21,7 +21,7 @@ import kh.spring.utils.EncryptionUtils;
 public class MemberController {
 
 	@Autowired
-	private MemberDAO dao;
+	private MemberService mService;
 
 	@Autowired
 	private HttpSession session;
@@ -38,7 +38,7 @@ public class MemberController {
 		public String idDuplCheck(String id) throws Exception  {
 			// 중복검사를 하고, 
 			// 결과를 Eclipse 콘솔에 출력하는 것까지 만드세요.
-			int result =  dao.idDuplCheck(id);
+			int result =  mService.idDuplCheck(id);
 			return String.valueOf(result);
 		}
 
@@ -46,14 +46,14 @@ public class MemberController {
 		public String signUpProc(MemberDTO dto) throws Exception{
 			String encPw = EncryptionUtils.getSHA512(dto.getPw());
 			dto.setPw(encPw);
-			int result = dao.insert(dto);
+			int result = mService.insert(dto);
 			return "home";
 		}
 
 		@RequestMapping("login")
 		public String login(String id, String pw) throws Exception{
 			pw = EncryptionUtils.getSHA512(pw);
-			int result = dao.login(id,pw);
+			int result = mService.login(id,pw);
 			if(result > 0) {
 				session.setAttribute("loginID", id);
 			}
@@ -70,7 +70,7 @@ public class MemberController {
 		@RequestMapping("deleteMem")
 		public String deleteMem() throws Exception{
 			String id = (String) session.getAttribute("loginID");
-			int result = dao.delete(id);
+			int result = mService.delete(id);
 
 			if(result > 0) {
 				System.out.println("계정이 탈퇴되었습니다.");
@@ -84,7 +84,7 @@ public class MemberController {
 		public String myPage(Model model) throws Exception{
 			try {
 				String id = (String) session.getAttribute("loginID");
-				List<MemberDTO> list = dao.selectAll(id);
+				List<MemberDTO> list = mService.selectAll(id);
 				model.addAttribute("list", list);
 			}catch(Exception e) {
 				e.printStackTrace();
@@ -94,7 +94,7 @@ public class MemberController {
 		}
 		@RequestMapping("updateMem")
 		public String updateMem(MemberDTO dto) throws Exception{
-			int result = dao.updateMem(dto);
+			int result = mService.updateMem(dto);
 			if(result > 0) {
 				System.out.println("정보수정이 완료 되었습니다");	
 			}
